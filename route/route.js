@@ -27,18 +27,47 @@ router.post('/register', async (req, res) => {
         }
 
         // Hash the password before saving
-        const saltRounds = 10;
-        const hashedPassword = await bcrypt.hash(password, saltRounds);
+       
+        const hashedPassword = await bcrypt.hash(password, 10);
 
         // Create a new user with the hashed password
         const newUser = new User({ username, password: hashedPassword });
 
         // Save the new user to the database
         await newUser.save();
-        res.status(200).send("User Successfully Registered");
+        res.status(200).send("User successfully registered");
     } catch (error) {
         console.error("Error saving user:", error);
         res.status(500).send("Error registering user: " + error.message);
+    }
+});
+
+// Route for serving the login page
+router.get('/login', (req, res) => {
+    res.sendFile(path.join(__dirname, '../route/login.html'));  // Ensure the path is correct
+});
+
+// Route for handling user login
+router.post('/login', async (req, res) => {
+    const { username, password } = req.body;
+
+    try {
+        // Find the user in the database
+        const user = await User.findOne({ username });
+        if (!user) {
+            return res.status(400).send("User not found");
+        }
+
+        // Compare the provided password with the hashed password
+        const isMatch = await bcrypt.compare(password, user.password);
+        if (!isMatch) {
+            return res.status(400).send("Invalid password");
+        }
+
+        res.status(200).send("Login successful");
+    } catch (error) {
+        console.error("Error logging in user:", error);
+        res.status(500).send("Error logging in user: " + error.message);
     }
 });
 
