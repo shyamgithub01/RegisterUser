@@ -12,7 +12,7 @@ const __dirname = path.dirname(__filename);
 
 // Route for serving the registration page
 router.get('/register', (req, res) => {
-    res.sendFile(path.join(__dirname, '../route/index.html'));  // Ensure the path is correct
+    res.sendFile(path.join(__dirname, '../src/index.html'));  // Ensure the path is correct
 });
 
 // Route for handling user registration
@@ -44,7 +44,7 @@ router.post('/register', async (req, res) => {
 
 // Route for serving the login page
 router.get('/login', (req, res) => {
-    res.sendFile(path.join(__dirname, '../route/login.html'));  // Ensure the path is correct
+    res.sendFile(path.join(__dirname, '../src/login.html'));  // Ensure the path is correct
 });
 
 // Route for handling user login
@@ -70,5 +70,11 @@ router.post('/login', async (req, res) => {
         res.status(500).send("Error logging in user: " + error.message);
     }
 });
+
+
+router.get('/app', (req, res) => {
+    res.sendFile(path.join(__dirname, '../src/app.html'));  // Ensure the path is correct
+  });
+
 
 export default router;
