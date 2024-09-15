@@ -122,7 +122,10 @@
             <label for="userinput">Username:</label>
             <input type="text" id="userinput" name="username" required>
             <label for="passwordinput">Password:</label>
-            <input type="password" id="passwordinput" name="password" required>
+            <div style="position: relative;">
+                <input type="password" id="password" name="password" required>
+                <span class="toggle-password" style="position: absolute; right: 10px; top: 12px; cursor: pointer;">👁️</span>
+            </div>
             <button type="submit">Register</button>
             
             
@@ -132,7 +135,23 @@
     </div>
 
     <script>
+
+
         const form = document.getElementById("registrationForm");
+
+
+        const passwordField = document.getElementById('password');
+    const togglePassword = document.querySelector('.toggle-password');
+
+    // Add click event listener to the icon
+    togglePassword.addEventListener('click', function () {
+        // Toggle between 'password' and 'text' input type
+        const type = passwordField.getAttribute('type') === 'password' ? 'text' : 'password';
+        passwordField.setAttribute('type', type);
+
+        // Toggle the icon (optional)
+        this.textContent = type === 'password' ? '👁️' : '🙈';
+    });
 
         form.addEventListener("submit", async (e) => {
             e.preventDefault();
