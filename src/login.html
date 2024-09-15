@@ -162,7 +162,7 @@
             e.preventDefault(); // Prevent the default form submission
 
             const username = document.getElementById("loginUser").value;
-            const password = document.getElementById("loginPassword").value;
+            const password = document.getElementById("password").value;
 
             const response = await fetch('/login', {
                 method: 'POST',
